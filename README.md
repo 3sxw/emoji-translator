@@ -1,5 +1,7 @@
 # 😀 Emoji Translator
 
+
+
 A single-page app that translates text into emojis — type a sentence, hit
 **Translate**, and every recognizable word is swapped for its emoji.
 Numbers, punctuation, and words with no match pass through unchanged.
@@ -12,7 +14,7 @@ JavaScript.
 Clone the repo and open `index.html` directly in a browser:
 
 ```bash
-git clone https://github.com/<your-username>/emoji-translator.git
+git clone https://github.com/3sxw/emoji-translator.git
 cd emoji-translator
 open index.html          # macOS
 # or just double-click index.html
