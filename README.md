@@ -1,7 +1,6 @@
 # 😀 Emoji Translator
 
-<img width="800" height="463" alt="ScreenRecording1448-01-20at4 35 24AM-ezgif com-video-to-gif-converter-2" src="https://github.com/user-attachments/assets/f22b2e89-63ab-4c0e-b217-19deb8c24001" />
-
+<img width="800" height="463" alt="ezgif com-video-to-gif-converter-2" src="https://github.com/user-attachments/assets/6669f89a-e462-4904-a8c4-930181b97e01" />
 
 A single-page app that translates text into emojis — type a sentence, hit
 **Translate**, and every recognizable word is swapped for its emoji.
