@@ -1,12 +1,24 @@
-# Emoji Translator 😀
+# 😀 Emoji Translator
 
-Translates text into an equivalent string of emojis. Words with a matching
-emoji are replaced; everything else (numbers, punctuation, unknown words)
-passes through unchanged.
+A single-page app that translates text into emojis — type a sentence, hit
+**Translate**, and every recognizable word is swapped for its emoji.
+Numbers, punctuation, and words with no match pass through unchanged.
 
-## Running the app
+No build step, no dependencies, no backend — just HTML, CSS, and vanilla
+JavaScript.
 
-It's a static site — open `index.html` in a browser, or serve the folder:
+## Quick start
+
+Clone the repo and open `index.html` directly in a browser:
+
+```bash
+git clone https://github.com/<your-username>/emoji-translator.git
+cd emoji-translator
+open index.html          # macOS
+# or just double-click index.html
+```
+
+Or serve it locally:
 
 ```bash
 npx http-server -p 8642
@@ -14,83 +26,73 @@ npx http-server -p 8642
 
 ## Features
 
-- [x] Enter a string of words, numbers, and punctuation into a text box
-- [x] Click **Translate** to convert words to their corresponding emojis
-- [x] Warning message when **Translate** is clicked with an empty input or
-      with text unchanged since the last translation
-- [x] Translated output in a read-only text box; words with no emoji are
-      left unchanged
-- [x] Click **Clear** to reset both text boxes
+- Enter any text — words, numbers, punctuation — and click **Translate**
+- Clear warnings if you translate empty or unchanged text
+- **Clear** button resets both the input and output boxes
+- **📋 Copy result** button, with clipboard fallback for older browsers
+- **⚡ Live mode** — translate as you type, no button needed
+- **🎲 Surprise me** — fills in a random example sentence
+- **Translation stats** — "✨ 5 of 8 words became emojis (63%)"
+- A fun, animated UI: gradient background, floating emojis, an emoji burst
+  on every translation — all respecting `prefers-reduced-motion`
 
-### Bonus features
+## Multi-language input
 
-- [x] **Emoji synonyms** — ~420 synonym mappings widen coverage
-      ("puppy" → 🐶, "hello" → 👋, "hungry" → 🍽️, "chef" → 🧑‍🍳)
-- [x] **Input language dropdown** — English, Spanish, French, German, and
-      Arabic, with per-language dictionaries, accent-insensitive matching
-      (café/cafe, glücklich/glucklich), and RTL-aware text boxes
-- [x] **Copy result** button with clipboard support
+Pick the input language from the dropdown: **English, Spanish, French,
+German, or Arabic**. Each has its own dictionary, and Arabic text boxes
+switch to right-to-left automatically. Loan words like "pizza" or "robot"
+translate correctly no matter which language is selected.
 
-### Extra features
+## Forgiving matching
 
-- [x] **⚡ Live mode** — translates as you type, no button needed
-- [x] **🎲 Surprise me** — fills in a random example sentence per language
-- [x] **Translation stats** — "✨ 5 of 8 words became emojis (63%)"
-- [x] **Emoji celebration burst** on every successful translation
-- [x] **Fun UI** — animated gradient, floating background emojis, wiggling
-      logo, gradient title, shake animation on warnings; respects
-      `prefers-reduced-motion`
+The translator is built to catch real-world typing, not just dictionary-
+perfect input:
 
-### Forgiving spelling (especially Arabic)
+- **Accent/diacritic insensitive** — café/cafe, glücklich/glucklich
+- **Arabic letter confusion** — ة/ه (قهوه = قهوة), ى/ي (مستشفي = مستشفى),
+  hamza forms (أ/إ/آ = ا), tashkeel and tatweel stripped
+- **Arabic prefixes & possessives** — والكلب، بالسيارة، كلبي، سيارتي all
+  resolve to their stem
+- **Broken plurals** — كلاب، قطط، أسود، أفيال
+- **Stretched letters** — coooool → cool, ههههههه → 😂
+- **Laughter in any language** — hahaha, jajaja, hehehe, mdr, لول
+- **~90 common English misspellings** — freind, coffe, choclate, bananna,
+  pinapple, avacado, spagetti, resturant...
 
-- **Arabic letter confusion** handled by normalization: ة/ه (قهوه = قهوة),
-  ى/ي (مستشفي = مستشفى), hamza forms (أ/إ/آ = ا), tashkeel and tatweel
-  stripped
-- **Attached prefixes**: والكلب، بالسيارة، للبيت all resolve to their stem
-- **Possessive suffixes**: كلبي → 🐶, سيارتي → 🚗 (including the ة→ت shift)
-- **Broken plurals**: كلاب، قطط، أسود، أفيال، مدارس...
-- **Stretched letters**: ههههههه → 😂, cooooool → 😎
-- **Laughter in any language**: hahaha, jajaja, hehehe, mdr, lol, لول, ههههه
-- **~90 common English misspellings**: freind, coffe, choclate, bananna,
-  pinapple, avacado, spagetti, resturant, calender...
-
-### Dictionary size
+## Dictionary coverage
 
 ~500 emojis in the base map, ~420 English synonyms/misspellings, and
-per-language dictionaries: Arabic ~575 words, Spanish ~300, German ~285,
-French ~270. Coverage spans food & drink (the full emoji pantry), animals,
-professions, places, transport, sports, music, household objects, nature,
-and emotions.
+per-language dictionaries (Arabic ~575 words, Spanish ~300, German ~285,
+French ~270) spanning food & drink, animals, professions, places,
+transport, sports, music, household objects, nature, and emotions.
 
-## How translation works
+## How it works
 
-1. The input is split into letter runs using a Unicode-aware regex, so
-   numbers and punctuation are untouched.
-2. Each word is normalized: lowercased, accents and Arabic diacritics
-   stripped (NFD decomposition), ß → ss, ة/ه and ى/ي folded together.
-3. Stretched letters are collapsed (coooool → cool) and repeated-letter
-   laughter is detected directly (hahaha, jajaja, ههههه → 😂).
-4. Lookup order: selected language's dictionary (stripping Arabic
-   prefixes/possessive suffixes or Latin plural endings as needed) →
-   English base dictionary → English synonym/misspelling map → simple
-   plural fallback. Loan words like "pizza" or "robot" translate in every
-   language.
-5. Words with no match are left as-is.
+1. Input is split into letter runs with a Unicode-aware regex, so numbers
+   and punctuation are left untouched.
+2. Each word is normalized: lowercased, accents/diacritics stripped
+   (NFD decomposition), ß → ss, ة/ه and ى/ي folded together.
+3. Stretched letters are collapsed and repeated-letter laughter is
+   detected directly.
+4. Lookup order: the selected language's dictionary (stripping Arabic
+   prefixes/suffixes or Latin plural endings as needed) → English base
+   dictionary → English synonym/misspelling map → plural fallback.
+5. Anything left unmatched is passed through as-is.
 
-## Files
+## Project structure
 
 | File | Purpose |
 |---|---|
-| `index.html` | Page structure: language dropdown, input/output boxes, buttons |
-| `style.css` | Styling |
-| `emoji-dictionary.js` | English word → emoji map + synonym map |
-| `lang-dictionaries.js` | Spanish, French, German, Arabic word → English-key maps |
-| `script.js` | Normalization, lookup, translation, and UI event handlers |
+| `index.html` | Page structure — language dropdown, input/output boxes, buttons |
+| `style.css` | Styling and animations |
+| `script.js` | Normalization, lookup, translation logic, and UI event handlers |
+| `emoji-dictionary.js` | English word → emoji map, plus synonyms/misspellings |
+| `lang-dictionaries.js` | Spanish, French, German, and Arabic word → English-key maps |
 
 ## Resources
 
-[Full Emoji List v12.0](https://unicode.org/emoji/charts/full-emoji-list.html)
+- [Full Emoji List v12.0](https://unicode.org/emoji/charts/full-emoji-list.html)
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE)
