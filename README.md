@@ -1,5 +1,6 @@
 # 😀 Emoji Translator
 
+**🚀 [Try it live here! (Live Demo)](https://3sxw.github.io/emoji-translator/)**
 <img width="800" height="463" alt="ezgif com-video-to-gif-converter-2" src="https://github.com/user-attachments/assets/6669f89a-e462-4904-a8c4-930181b97e01" />
 
 A single-page app that translates text into emojis — type a sentence, hit
